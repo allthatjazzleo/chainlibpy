@@ -1,4 +1,4 @@
-name: Build
+name: check and upload
 
 on:
   pull_request:
@@ -9,6 +9,10 @@ on:
 jobs:
   tox_test:
     name: Tox test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tox_env: [py36, py37, py38, py39]
     steps:
     - uses: actions/checkout@v2
     - name: Run Tox tests
@@ -16,7 +20,10 @@ jobs:
       uses: fedora-python/tox-github-action@master
       with:
         tox_env: ${{ matrix.tox_env }}
-    strategy:
-      matrix:
-        tox_env: [py36, py37, py38, py39]
+  upload:
+    needs: [tox_test]
     runs-on: ubuntu-latest
+    - name: install jfrog
+      run: curl -fL https://getcli.jfrog.io | sh
+    - name: upload to jfrog
+      run: echo "upload..."
