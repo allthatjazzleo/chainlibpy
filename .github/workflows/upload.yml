@@ -17,5 +17,6 @@ jobs:
       - name: install jfrog
         run: curl -fL https://getcli.jfrog.io | sh
       - name: upload to jfrog
-        run: ls -al dist && ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --access-token $ARTIFACTORY_PASSWORD --interactive=false &&
-          ./jfrog rt u --build-name=Crypto-Blockchain-PYPI --build-number=${{ github.run_id }} --flat=true "dist/*" "$ARTIFACTORY_NAME"
+        run: | 
+          ./jfrog rt config --url "${{ secrets.ARTIFACTORY_URL }}" --user "${{ secrets.ARTIFACTORY_USER }}" --access-token "${{ secrets.ARTIFACTORY_PASSWORD }}" --interactive=false
+          ./jfrog rt u --build-name=Crypto-Blockchain-PYPI --build-number=${{ github.run_id }} --flat=true "dist/*" "${{ secrets.ARTIFACTORY_NAME }}"
