@@ -33,4 +33,4 @@ jobs:
         run: curl -fL https://getcli.jfrog.io | sh
       - name: upload to jfrog
         run: ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --access-token $ARTIFACTORY_PASSWORD --interactive=false &&
-          ./jfrog rt u "dist/*" "chainlibpy" --build-name=Crypto-Blockchain-PYPI --build-number=${{ github.run_id }} --flat=true
+          ./jfrog rt u "dist/*" $ARTIFACTORY_NAME --build-name=Crypto-Blockchain-PYPI --build-number=${{ github.run_id }} --flat=true
